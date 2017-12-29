@@ -1,0 +1,12 @@
+#General
+*.config
+package.yaml
+
+#Haskell
+.stack-work/
+stack.yaml
+*.cabal
+
+# Erlang
+.eunit/
+.rebar/
