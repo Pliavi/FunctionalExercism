@@ -1,6 +1,7 @@
 #General
 *.config
 package.yaml
+.vscode/
 
 #Haskell
 .stack-work/
