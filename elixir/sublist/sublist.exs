@@ -1,30 +1,25 @@
 defmodule Sublist do
-  @doc """
-  Returns whether the first list is a sublist or a superlist of the second list
-  and if not whether it is equal or unequal to the second list.
-  """
+  
+  def compare([], []), do: :equal
   def compare(a, b) do
-    # Isso que eu chamo de codigo limpo :v
-    if length(a) >= length(b) do
-      (what_is = do_compare(a, b, 0)) == :sub_or_superlist 
-        && :superlist 
-        || what_is
-    else
-      (what_is = do_compare(b, a, 0)) == :sub_or_superlist 
-        && :sublist   
-        || what_is
+    cond do
+      a == b                -> :equal
+      length(a) < length(b) -> do_compare(a, b, false)
+      true                  -> do_compare(b, a, true)
     end
   end
 
-  defp do_compare([],[], _), do: :equal
-  defp do_compare([x | a], b, i) do
-    if length(b) == i && i > 0 do
-      :sub_or_superlist
+  def do_compare(_, [],_), do: :unequal
+  def do_compare(small, big, reverse) do
+    partial = Enum.take big, length small
+    
+    if small === partial do 
+      if reverse, 
+        do: :superlist, 
+        else: :sublist
     else
-      x == Enum.at(b, i) 
-      && do_compare(a, b, i + 1)
-      || do_compare(a, b, 0)
+      do_compare small, (tl big), reverse
     end
   end
-  defp do_compare(a, b, _) when length(a) < length(b), do: :unequal
+
 end
